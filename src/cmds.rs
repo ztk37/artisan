@@ -1,6 +1,3 @@
-// use std::fs::File;
-// use std::path::Path;
-
 use std::{env::current_dir, fs::File, path::Path};
 
 #[derive(Debug)]
@@ -10,25 +7,23 @@ pub enum InitialisationError {
 }
 
 pub fn init() -> Result<(), InitialisationError> {
-    // TODO: refactor with chaining
-    match current_dir() {
-        Ok(cwd) => {
-            let config_path = Path::join(&cwd, Path::new(".github/repo.yml"));
+    let config_path_buf = current_dir()
+        .map(|cur_dir| Path::join(&cur_dir, ".github/repo.yml"))
+        .map_err(|io_err| InitialisationError::GenericError(io_err.to_string()));
 
-            if Path::exists(config_path.as_path()) {
-                Err(InitialisationError::AlreadyInitialized)
-            } else {
-                match std::fs::create_dir_all(".github") {
-                    Ok(()) => {}
-                    Err(err) => println!("{:?}", err),
-                }
-
-                match File::create(config_path) {
-                    Ok(_file) => Ok(()),
-                    Err(err) => Err(InitialisationError::GenericError(err.to_string())),
-                }
+    config_path_buf.and_then(|config_path| {
+        if Path::exists(config_path.as_path()) {
+            Err(InitialisationError::AlreadyInitialized)
+        } else {
+            if let Err(err) = std::fs::create_dir_all(".github") {
+                return Err(InitialisationError::GenericError(err.to_string()));
             }
+
+            if let Err(err) = File::create(config_path) {
+                return Err(InitialisationError::GenericError(err.to_string()));
+            }
+
+            Ok(())
         }
-        Err(err) => Err(InitialisationError::GenericError(err.to_string())),
-    }
+    })
 }
