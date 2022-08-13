@@ -1,11 +1,9 @@
 use clap::{Parser, Subcommand};
 
-const VERSION: &str = "v0.0.0";
-
 #[derive(Parser, Debug)]
 #[clap(
     name = "repo",
-    version = VERSION
+    version =  "v0.0.0"
 )]
 pub struct Arguments {
     #[clap(subcommand)]
@@ -14,15 +12,14 @@ pub struct Arguments {
 
 #[derive(Subcommand, Debug)]
 pub enum Command {
-    Init,
-    Version
+    #[clap(about = "Init repo in the current directory")]
+    Init
 }
 
 fn main() {
     let args = Arguments::parse();
 
     match args.command {
-        Command::Init => todo!(),
-        Command::Version => println!("{}", VERSION)
+        Command::Init => todo!()
     }
 }
