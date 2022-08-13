@@ -23,9 +23,10 @@ fn main() {
     let args = Arguments::parse();
 
     match args.command {
-        Command::Init => match cmds::init() {
-            Ok(()) => {},
-            Err(err) => println!("{:?}", err)
+        Command::Init => {
+            if let Err(err) = cmds::init() {
+                println!("{:?}", err)
+            }
         }
     }
 }
