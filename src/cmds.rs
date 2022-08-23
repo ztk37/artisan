@@ -27,3 +27,7 @@ pub fn init() -> Result<(), InitialisationError> {
         }
     })
 }
+
+pub fn not_implemented_yet() -> Result<(), String> {
+    Err(String::from("command not implemented yet"))
+}

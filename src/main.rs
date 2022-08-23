@@ -9,7 +9,7 @@ fn main() {
     match cli::run(args) {
         Ok(()) => exit(0),
         Err(err) => {
-            println!("{:?}", err);
+            println!("{}", err);
             exit(1)
         }
     }
