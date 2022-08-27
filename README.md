@@ -1,15 +1,18 @@
-# `repo`
+<h1 align="center">
+  <div><img src="./media/logo.svg" alt="logo" width="160px" /></div>
+  <p>Artisan</ps>
+</h1>
 
-> `repo` is a tool for doing chore work inside your repositories.
+> `Artisan` is a tool for doing chore work inside your repositories.
 
 ## Usage
 
 ```
-repo v0.0.0
+artisan v0.0.0
 A tool for doing chore work inside your repositories.
 
 USAGE:
-    repo <SUBCOMMAND>
+    artisan <SUBCOMMAND>
 
 OPTIONS:
     -h, --help       Print help information

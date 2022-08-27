@@ -8,7 +8,7 @@ pub enum InitialisationError {
 
 pub fn run() -> Result<(), InitialisationError> {
     let config_path_buf = current_dir()
-        .map(|cur_dir| Path::join(&cur_dir, ".github/repo.yml"))
+        .map(|cur_dir| Path::join(&cur_dir, ".github/artisan.yml"))
         .map_err(|io_err| InitialisationError::GenericError(io_err.to_string()));
 
     config_path_buf.and_then(|config_path| {

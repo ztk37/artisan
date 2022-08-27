@@ -2,7 +2,7 @@ use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
 #[clap(
-    name = "repo",
+    name = "artisan",
     version = "v0.0.0",
     about = "A tool for doing chore work inside your repositories."
 )]
@@ -13,11 +13,11 @@ pub struct Options {
 
 #[derive(Subcommand, Debug)]
 pub enum RootCommand {
-    #[clap(about = "Init repo in the current directory")]
+    #[clap(about = "Init artisan in the current directory")]
     Init,
-    #[clap(about = "Create a new folder with a .github/repo.yml")]
+    #[clap(about = "Create a new folder with a .github/artisan.yml")]
     New,
-    #[clap(about = "Manage todos inside this repo")]
+    #[clap(about = "Manage todos inside this repository")]
     Todo(Todo),
     #[clap(about = "Add or show license")]
     License(License),
