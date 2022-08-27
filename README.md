@@ -1,3 +1,5 @@
+> `Disclaimer:` This project is in an early stage, expect bugs, missing features and unannounced changes.
+
 <h1 align="center">
   <div><img src="./media/logo.svg" alt="logo" width="160px" /></div>
   <p>Artisan</ps>
