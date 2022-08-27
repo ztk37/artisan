@@ -1,14 +1,12 @@
 use clap::{Parser, Subcommand};
 
-use crate::cmds;
-
 #[derive(Parser, Debug)]
 #[clap(
     name = "repo",
     version = "v0.0.0",
     about = "A tool for doing chore work inside your repositories."
 )]
-pub struct Cli {
+pub struct Options {
     #[clap(subcommand)]
     pub command: RootCommand,
 }
@@ -28,7 +26,7 @@ pub enum RootCommand {
 #[derive(Parser, Debug)]
 pub struct Todo {
     #[clap(subcommand)]
-    sub: TodoCommand,
+    pub sub: TodoCommand,
 }
 
 #[derive(Subcommand, Debug)]
@@ -44,7 +42,7 @@ pub enum TodoCommand {
 #[derive(Parser, Debug)]
 pub struct License {
     #[clap(subcommand)]
-    sub: LicenseCommand,
+    pub sub: LicenseCommand,
 }
 
 #[derive(Subcommand, Debug)]
@@ -53,10 +51,6 @@ pub enum LicenseCommand {
     Show,
     #[clap(about = "TBD")]
     Add,
-}
-
-pub fn parse_args() -> Cli {
-    return Cli::parse();
 }
 
 #[derive(Parser, Debug)]
@@ -73,20 +67,4 @@ pub enum TodoCmd {
     Add,
     #[clap(about = "TBD")]
     Delete,
-}
-
-pub fn run(args: Cli) -> Result<(), String> {
-    match args.command {
-        RootCommand::Init => cmds::init().map_err(|_err| String::from("")),
-        RootCommand::New => cmds::not_implemented_yet(),
-        RootCommand::License(command) => match command.sub {
-            LicenseCommand::Add => cmds::not_implemented_yet(),
-            LicenseCommand::Show => cmds::not_implemented_yet(),
-        },
-        RootCommand::Todo(command) => match command.sub {
-            TodoCommand::Show => cmds::not_implemented_yet(),
-            TodoCommand::Add => cmds::not_implemented_yet(),
-            TodoCommand::Delete => cmds::not_implemented_yet(),
-        },
-    }
 }

@@ -1,16 +1,31 @@
 use std::process::exit;
 
-mod cli;
-mod cmds;
+use clap::Parser;
+
+use repo::{
+    cmds,
+    options::{Options, RootCommand},
+};
 
 fn main() {
-    let args = cli::parse_args();
+    let opts = Options::from_args();
 
-    match cli::run(args) {
-        Ok(()) => exit(0),
-        Err(err) => {
-            println!("{}", err);
-            exit(1)
+    let exit_code = match run_command(opts.command) {
+        Err((code, message)) => {
+            println!("exited with code {} - {}", code, message);
+            code
         }
+        Ok(()) => 0,
+    };
+
+    exit(exit_code);
+}
+
+fn run_command(cmd: RootCommand) -> Result<(), (i32, String)> {
+    match cmd {
+        RootCommand::Init => cmds::init::run().map_err(|err| (1, format!("{:?}", err))),
+        RootCommand::New => cmds::new::run(),
+        RootCommand::License(command) => cmds::license::run(command),
+        RootCommand::Todo(command) => cmds::todo::run(command),
     }
 }

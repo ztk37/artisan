@@ -6,7 +6,7 @@ pub enum InitialisationError {
     AlreadyInitialized,
 }
 
-pub fn init() -> Result<(), InitialisationError> {
+pub fn run() -> Result<(), InitialisationError> {
     let config_path_buf = current_dir()
         .map(|cur_dir| Path::join(&cur_dir, ".github/repo.yml"))
         .map_err(|io_err| InitialisationError::GenericError(io_err.to_string()));
@@ -26,8 +26,4 @@ pub fn init() -> Result<(), InitialisationError> {
             Ok(())
         }
     })
-}
-
-pub fn not_implemented_yet() -> Result<(), String> {
-    Err(String::from("command not implemented yet"))
 }
