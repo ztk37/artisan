@@ -24,8 +24,7 @@ fn main() {
 fn run_command(cmd: RootCommand) -> Result<(), (i32, String)> {
     match cmd {
         RootCommand::Init => cmds::init::run().map_err(|err| (1, format!("{:?}", err))),
-        RootCommand::New => cmds::new::run(),
-        RootCommand::License(command) => cmds::license::run(command),
-        RootCommand::Todo(command) => cmds::todo::run(command),
+        RootCommand::New(_) => cmds::new::run(),
+        RootCommand::Release(_) => cmds::release::run(),
     }
 }

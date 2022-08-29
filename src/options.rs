@@ -15,56 +15,23 @@ pub struct Options {
 pub enum RootCommand {
     #[clap(about = "Init artisan in the current directory")]
     Init,
-    #[clap(about = "Create a new folder with a .github/artisan.yml")]
-    New,
-    #[clap(about = "Manage todos inside this repository")]
-    Todo(Todo),
-    #[clap(about = "Add or show license")]
-    License(License),
+    #[clap(about = "TBD")]
+    New(NewOptions),
+    #[clap(about = "TBD")]
+    Release(Release),
 }
 
 #[derive(Parser, Debug)]
-pub struct Todo {
-    #[clap(subcommand)]
-    pub sub: TodoCommand,
-}
-
-#[derive(Subcommand, Debug)]
-pub enum TodoCommand {
-    #[clap(about = "TBD")]
-    Show,
-    #[clap(about = "TBD")]
-    Add,
-    #[clap(about = "TBD")]
-    Delete,
-}
+pub struct NewOptions {}
 
 #[derive(Parser, Debug)]
-pub struct License {
+pub struct Release {
     #[clap(subcommand)]
-    pub sub: LicenseCommand,
+    pub command: ReleaseCommand,
 }
 
 #[derive(Subcommand, Debug)]
-pub enum LicenseCommand {
+pub enum ReleaseCommand {
     #[clap(about = "TBD")]
-    Show,
-    #[clap(about = "TBD")]
-    Add,
-}
-
-#[derive(Parser, Debug)]
-pub struct TodoOptions {
-    #[clap(subcommand)]
-    pub command: TodoCmd,
-}
-
-#[derive(Subcommand, Debug)]
-pub enum TodoCmd {
-    #[clap(about = "TBD")]
-    Show,
-    #[clap(about = "TBD")]
-    Add,
-    #[clap(about = "TBD")]
-    Delete,
+    Create,
 }
