@@ -4,15 +4,16 @@ use clap::Parser;
 
 use repo::{
     cmds,
-    options::{Options, RootCommand},
+    options::{Options, RootCommand}, error::CliError,
 };
 
 fn main() {
     let opts = Options::from_args();
 
     let exit_code = match run_command(opts.command) {
-        Err((code, message)) => {
-            println!("exited with code {} - {}", code, message);
+        Err(message) => {
+            let code = 1;
+            println!("exited with code {} - {:?}", code, message);
             code
         }
         Ok(()) => 0,
@@ -21,10 +22,8 @@ fn main() {
     exit(exit_code);
 }
 
-fn run_command(cmd: RootCommand) -> Result<(), (i32, String)> {
+fn run_command(cmd: RootCommand) -> Result<(), CliError> {
     match cmd {
-        RootCommand::Init => cmds::init::run().map_err(|err| (1, format!("{:?}", err))),
         RootCommand::New(_) => cmds::new::run(),
-        RootCommand::Release(_) => cmds::release::run(),
     }
 }

@@ -13,25 +13,12 @@ pub struct Options {
 
 #[derive(Subcommand, Debug)]
 pub enum RootCommand {
-    #[clap(about = "Init artisan in the current directory")]
-    Init,
-    #[clap(about = "TBD")]
+    #[clap(about = "Create a new repository from a template")]
     New(NewOptions),
-    #[clap(about = "TBD")]
-    Release(Release),
 }
 
 #[derive(Parser, Debug)]
-pub struct NewOptions {}
-
-#[derive(Parser, Debug)]
-pub struct Release {
-    #[clap(subcommand)]
-    pub command: ReleaseCommand,
-}
-
-#[derive(Subcommand, Debug)]
-pub enum ReleaseCommand {
-    #[clap(about = "TBD")]
-    Create,
+pub struct NewOptions {
+    #[clap(long, default_value="simple")]
+    pub template: String,
 }

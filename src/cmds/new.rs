@@ -1,3 +1,5 @@
-pub fn run() -> Result<(), (i32, String)> {
-    crate::cmds::not_implemented_yet()
+use crate::error::CliError;
+
+pub fn run() -> Result<(), CliError> {
+    Ok(())
 }
