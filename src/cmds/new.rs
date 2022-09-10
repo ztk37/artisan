@@ -1,4 +1,4 @@
-use crate::{error::CliResult, cli::NewOptions};
+use crate::{cli::NewOptions, error::CliResult};
 
 pub fn run(options: NewOptions) -> CliResult {
     println!("{:?}", options);
