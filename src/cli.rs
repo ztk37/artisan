@@ -19,6 +19,8 @@ pub enum RootCommand {
 
 #[derive(Parser, Debug)]
 pub struct NewOptions {
+    #[clap(long)]
+    pub name: String,
     #[clap(long, default_value = "default.toml")]
     pub template: String,
 }

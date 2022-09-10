@@ -4,7 +4,7 @@ use clap::Parser;
 
 use repo::{
     cli::{Options, RootCommand},
-    cmds,
+    commands,
     error::CliError,
 };
 
@@ -25,6 +25,6 @@ fn main() {
 
 fn run_command(cmd: RootCommand) -> Result<(), CliError> {
     match cmd {
-        RootCommand::New(options) => cmds::new::run(options),
+        RootCommand::New(options) => commands::new::run(options),
     }
 }
