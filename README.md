@@ -1,39 +1,15 @@
 > `Disclaimer:` This project is in an early stage, expect bugs, missing features and unannounced changes.
 
-<h1 align="center">
+<div align="center">
   <div><img src="./media/logo.svg" alt="logo" width="160px" /></div>
-  <p>Artisan</ps>
-</h1>
+  <h1>Artisan</h1>
+</div>
 
-> `Artisan` is a tool for doing chore work inside your repositories.
+## Features
 
-## Usage
+- `Generate` new projects based on a self-contained template file written in [TOML](https://toml.io/en/). (WIP)
 
-```
-artisan v0.0.0
-A tool for doing chore work inside your repositories.
+## Future Work
 
-USAGE:
-    repo <SUBCOMMAND>
-
-OPTIONS:
-    -h, --help       Print help information
-    -V, --version    Print version information
-
-SUBCOMMANDS:
-    help       Print this message or the help of the given subcommand(s)
-    new        TBD
-    release    TBD
-```
-
-<!-- ## Features
-
-> TBD -->
-
-<!-- ## Future Work
-
-> TBD -->
-
-## License
-
-> [MIT licensed](./LICENSE)
+- `Manage` your templates directly from the command line. (considering)
+- `Release` your generated projects directly to GitHub. (considering)
