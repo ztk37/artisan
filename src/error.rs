@@ -1,3 +1,5 @@
+pub type CliResult = Result<(), CliError>;
+
 #[derive(Debug)]
 pub enum CliError {
     Io(std::io::Error),

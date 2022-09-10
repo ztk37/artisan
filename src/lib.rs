@@ -1,3 +1,3 @@
-pub mod options;
+pub mod cli;
 pub mod cmds;
 pub mod error;

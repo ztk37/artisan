@@ -13,12 +13,12 @@ pub struct Options {
 
 #[derive(Subcommand, Debug)]
 pub enum RootCommand {
-    #[clap(about = "Create a new repository from a template")]
+    #[clap(about = "Create a new project from a template")]
     New(NewOptions),
 }
 
 #[derive(Parser, Debug)]
 pub struct NewOptions {
-    #[clap(long, default_value="simple")]
+    #[clap(long, default_value="default.toml")]
     pub template: String,
 }

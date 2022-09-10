@@ -1,5 +1,6 @@
-use crate::error::CliError;
+use crate::{error::CliResult, cli::NewOptions};
 
-pub fn run() -> Result<(), CliError> {
+pub fn run(options: NewOptions) -> CliResult {
+    println!("{:?}", options);
     Ok(())
 }

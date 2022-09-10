@@ -3,8 +3,9 @@ use std::process::exit;
 use clap::Parser;
 
 use repo::{
+    cli::{Options, RootCommand},
     cmds,
-    options::{Options, RootCommand}, error::CliError,
+    error::CliError,
 };
 
 fn main() {
@@ -24,6 +25,6 @@ fn main() {
 
 fn run_command(cmd: RootCommand) -> Result<(), CliError> {
     match cmd {
-        RootCommand::New(_) => cmds::new::run(),
+        RootCommand::New(options) => cmds::new::run(options),
     }
 }
