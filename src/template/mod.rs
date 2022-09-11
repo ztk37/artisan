@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use serde_derive::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -14,24 +16,29 @@ pub struct TemplateMeta {
 
 #[derive(Debug, Deserialize)]
 pub struct TemplateFile {
-    pub file: String,
+    pub file: PathBuf,
     pub template: String,
 }
 
 impl TemplateFile {
     pub fn generate(&self, project_name: &String) -> Result<(), String> {
-        let file = std::fs::File::create(std::path::PathBuf::from_iter(vec![
-            project_name,
-            &self.file,
-        ]));
+        let project_path = std::path::PathBuf::from(project_name);
 
-        if let Err(err) = file {
-            return Err(err.to_string());
+        if let Some(sub_folder) = self.file.parent() {
+            std::fs::create_dir_all(project_path.join(sub_folder))
+                .map_err(|err| err.to_string())?;
         }
 
-        if let Err(err) = std::io::Write::write_all(&mut file.unwrap(), self.template.as_bytes()) {
-            return Err(err.to_string());
-        }
+        let mut file = std::fs::File::create(project_path.join(self.file.as_path()))
+            .map_err(|err| err.to_string())?;
+
+        println!(
+            "* creating \"{}\"",
+            self.file.as_path().display().to_string()
+        );
+
+        std::io::Write::write_all(&mut file, self.template.as_bytes())
+            .map_err(|err| err.to_string())?;
 
         Ok(())
     }
