@@ -1,8 +1,14 @@
 { pkgs ? import <nixpkgs> {}
-}: pkgs.mkShell {
+}:
+
+let
+    inherit (pkgs) callPackage mkShell;
+
+    artisan = callPackage ./default.nix {};
+in mkShell {
     name = "nix-shell";
 
     buildInputs = [
-        pkgs.rustfmt
+        artisan
     ];
 }
