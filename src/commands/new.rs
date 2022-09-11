@@ -1,39 +1,18 @@
-use crate::{
-    cli::NewOptions,
-    error::{CliError, CliResult},
-    template::Template,
-};
+use crate::{cli::NewOptions, error::CliResult, template::Template};
+use std::path::PathBuf;
 
 pub fn run(options: &NewOptions) -> CliResult {
-    if let Err(err) = std::fs::create_dir(&options.name) {
-        return Err(CliError::from(err));
-    }
+    std::fs::create_dir(&options.name)?;
 
-    let readed = std::fs::read_to_string(std::path::PathBuf::from_iter(vec![
-        &"templates".to_string(),
-        &options.template,
-    ]));
+    let file_content = std::fs::read(PathBuf::from("templates").join(&options.template))?;
 
-    if let Err(err) = readed {
-        return Err(CliError::from(err));
-    }
+    let template: Template = toml::from_slice(file_content.as_ref())?;
 
-    let template: Result<Template, CliError> =
-        toml::from_str(readed.unwrap().as_str()).map_err(CliError::from);
-
-    if let Err(err) = template {
-        return Err(err);
-    }
-
-    template
-        .unwrap()
-        .templates
-        .into_iter()
-        .for_each(|template| {
-            if let Err(err) = template.generate(&options.name) {
-                println!("{}", err);
-            }
-        });
+    template.templates.into_iter().for_each(|template| {
+        if let Err(err) = template.generate(&options.name) {
+            println!("{}", err);
+        }
+    });
 
     Ok(())
 }
