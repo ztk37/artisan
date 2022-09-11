@@ -9,6 +9,23 @@
 
 - `Generate` new projects based on a self-contained template file written in [TOML](https://toml.io/en/). (WIP)
 
+## Usage
+
+```
+artisan v0.0.0
+
+USAGE:
+    artisan <SUBCOMMAND>
+
+OPTIONS:
+    -h, --help       Print help information
+    -V, --version    Print version information
+
+SUBCOMMANDS:
+    help    Print this message or the help of the given subcommand(s)
+    new     Create a new project from a template
+```
+
 ## Future Work
 
 - `Manage` your templates directly from the command line. (considering)

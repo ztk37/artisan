@@ -1,11 +1,7 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
-#[clap(
-    name = "artisan",
-    version = "v0.0.0",
-    about = "A tool for doing chore work inside your repositories."
-)]
+#[clap(name = "artisan", version = "v0.0.0")]
 pub struct Options {
     #[clap(subcommand)]
     pub command: RootCommand,
