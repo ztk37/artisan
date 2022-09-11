@@ -3,7 +3,14 @@ pub type CliResult = Result<(), CliError>;
 #[derive(Debug)]
 pub enum CliError {
     Io(std::io::Error),
-    Msg(String),
+    Plain(String),
+    Toml(String),
+}
+
+impl From<String> for CliError {
+    fn from(msg: String) -> Self {
+        CliError::Plain(msg)
+    }
 }
 
 impl From<std::io::Error> for CliError {
@@ -12,8 +19,8 @@ impl From<std::io::Error> for CliError {
     }
 }
 
-impl From<String> for CliError {
-    fn from(msg: String) -> Self {
-        CliError::Msg(msg)
+impl From<toml::de::Error> for CliError {
+    fn from(err: toml::de::Error) -> Self {
+        CliError::Toml(err.to_string())
     }
 }

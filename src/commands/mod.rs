@@ -4,6 +4,6 @@ pub mod new;
 
 pub fn run(cmd: RootCommand) -> Result<(), CliError> {
     match cmd {
-        RootCommand::New(options) => new::run(options),
+        RootCommand::New(options) => new::run(&options),
     }
 }
