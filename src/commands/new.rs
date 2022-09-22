@@ -1,7 +1,7 @@
-use crate::{cli::NewOptions, error::CliResult, template::Template};
+use crate::{cli::NewCommand, error::CliResult, template::Template};
 use std::path::PathBuf;
 
-pub fn run(options: &NewOptions) -> CliResult {
+pub fn run(options: &NewCommand) -> CliResult {
     std::fs::create_dir(&options.name)?;
 
     let file_content = std::fs::read(PathBuf::from("templates").join(&options.template))?;

@@ -1,13 +1,11 @@
+use artisan::cli::Cli;
+use clap::Parser;
 use std::process::exit;
 
-use clap::Parser;
-
-use artisan::{cli::Options, commands};
-
 fn main() {
-    let opts = Options::from_args();
+    let opts = Cli::from_args();
 
-    let exit_code = match commands::run(opts.command) {
+    let exit_code = match opts.run() {
         Err(err) => {
             let code = 1;
             println!("exited with code {} - {:?}", code, err);

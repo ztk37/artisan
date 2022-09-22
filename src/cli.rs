@@ -1,20 +1,23 @@
-use clap::{Parser, Subcommand};
+use crate::{commands, error::CliResult};
+use clap::Parser;
 
-#[derive(Parser, Debug)]
+#[derive(Debug, Parser)]
 #[clap(name = "artisan", version = "v0.0.0")]
-pub struct Options {
-    #[clap(subcommand)]
-    pub command: RootCommand,
-}
-
-#[derive(Subcommand, Debug)]
-pub enum RootCommand {
+pub enum Cli {
     #[clap(about = "Create a new project from a template")]
-    New(NewOptions),
+    New(NewCommand),
 }
 
-#[derive(Parser, Debug)]
-pub struct NewOptions {
+impl Cli {
+    pub fn run(self) -> CliResult {
+        match self {
+            Cli::New(options) => commands::new::run(&options),
+        }
+    }
+}
+
+#[derive(Debug, Parser)]
+pub struct NewCommand {
     #[clap(long)]
     pub name: String,
     #[clap(long, default_value = "default.toml")]
