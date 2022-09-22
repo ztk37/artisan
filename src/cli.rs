@@ -1,4 +1,4 @@
-use crate::{commands, error::CliResult};
+use crate::{commands::new::NewCommand, error::CliResult};
 use clap::Parser;
 
 #[derive(Debug, Parser)]
@@ -11,15 +11,7 @@ pub enum Cli {
 impl Cli {
     pub fn run(self) -> CliResult {
         match self {
-            Cli::New(options) => commands::new::run(&options),
+            Cli::New(cmd) => cmd.run(),
         }
     }
-}
-
-#[derive(Debug, Parser)]
-pub struct NewCommand {
-    #[clap(long)]
-    pub name: String,
-    #[clap(long, default_value = "default.toml")]
-    pub template: String,
 }
