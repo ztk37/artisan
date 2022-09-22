@@ -28,5 +28,6 @@ SUBCOMMANDS:
 
 ## Future Work
 
+- `Hooks` integrate git hooks (considering)
 - `Manage` your templates directly from the command line. (considering)
 - `Release` your generated projects directly to GitHub. (considering)
