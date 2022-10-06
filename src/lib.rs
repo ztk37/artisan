@@ -5,6 +5,9 @@ pub mod commands;
 pub mod error;
 pub mod template;
 
+#[macro_use]
+pub mod macros;
+
 pub fn find_artisan_home_location() -> Result<PathBuf, String> {
     if let Ok(env_artisan_home) = std::env::var("ARTISAN_HOME") {
         return Ok(PathBuf::from(env_artisan_home));
