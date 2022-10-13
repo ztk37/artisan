@@ -33,7 +33,8 @@ impl TemplateFile {
             .map_err(|err| err.to_string())?;
 
         println!(
-            "* creating \"{}\"",
+            "{} \"{}\"",
+            ansi_term::Color::Green.paint("* creating"),
             self.file.as_path().display().to_string()
         );
 

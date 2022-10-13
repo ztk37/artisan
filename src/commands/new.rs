@@ -1,3 +1,5 @@
+use std::io::Write;
+
 use clap::Parser;
 
 use crate::{error::CliResult, find_artisan_home_location, template::Template};
@@ -10,11 +12,19 @@ pub struct NewCommand {
     pub template: String,
 }
 
+pub fn engine() -> liquid::Parser {
+    liquid::ParserBuilder::new()
+        .build()
+        .expect("no partial templates supported - no panic")
+}
+
 impl NewCommand {
     pub fn run(&self) -> CliResult {
         let home = find_artisan_home_location()?;
         let template_dir = home.join("templates");
         let template_file_name = template_dir.join(&self.template);
+
+        let project_path = std::path::PathBuf::from(&self.name);
 
         let template_file_content = std::fs::read(&template_file_name).map_err(|_| {
             format!(
@@ -28,11 +38,39 @@ impl NewCommand {
 
         let template: Template = toml::from_slice(&template_file_content.as_ref())?;
 
-        template.templates.into_iter().for_each(|template| {
-            if let Err(err) = template.generate(&self.name) {
-                println!("{}", err);
+        let engine = engine();
+
+        let mut globals = liquid::Object::new();
+
+        globals.insert("name".into(), liquid::model::Value::scalar("example"));
+
+        let mut errors: Vec<liquid::Error> = Vec::new();
+
+        for tpl in template.templates.iter() {
+            let parsed = engine.parse(&tpl.template);
+
+            if let Err(ref err) = parsed {
+                errors.push(err.to_owned());
             }
-        });
+
+            let rendered = parsed.unwrap().render(&globals);
+
+            if let Err(ref err) = rendered {
+                errors.push(err.to_owned());
+            }
+
+            let file =
+                std::fs::File::create(project_path.join(&tpl.file)).map_err(|err| err.to_string());
+
+            match file.unwrap().write_all(rendered.unwrap().as_bytes()) {
+                Ok(()) => println!(
+                    "{} \"{}\"",
+                    ansi_term::Color::Green.paint("* creating"),
+                    tpl.file.as_path().display().to_string()
+                ),
+                Err(err) => println!("{:?}", err),
+            }
+        }
 
         Ok(())
     }
