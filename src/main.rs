@@ -3,7 +3,7 @@ use clap::Parser;
 use std::process::exit;
 
 fn main() {
-    let opts = Cli::from_args();
+    let opts = Cli::parse();
 
     let exit_code = match opts.run() {
         Err(err) => {
