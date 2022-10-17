@@ -1,9 +1,8 @@
 use artisan::cli::Cli;
-use clap::Parser;
 use std::process::exit;
 
 fn main() {
-    let opts = Cli::parse();
+    let opts = Cli::parse_args();
 
     let exit_code = match opts.run() {
         Err(err) => {
