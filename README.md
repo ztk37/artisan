@@ -11,18 +11,17 @@
 ## Usage
 
 ```
-artisan v0.0.0
+Usage: artisan <COMMAND>
 
-USAGE:
-    artisan <SUBCOMMAND>
+Commands:
+  new     Create a new project from a template
+  config  Manage artisans global config
+  home    Manage artisans home directory
+  help    Print this message or the help of the given subcommand(s)
 
-OPTIONS:
-    -h, --help       Print help information
-    -V, --version    Print version information
-
-SUBCOMMANDS:
-    help    Print this message or the help of the given subcommand(s)
-    new     Create a new project from a template
+Options:
+  -h, --help     Print help information
+  -V, --version  Print version information
 ```
 
 ## Future Work
