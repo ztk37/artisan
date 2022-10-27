@@ -1,0 +1,7 @@
+name: Umbrella
+description: Sample description
+labels: ["kind/umbrella"]
+body:
+  - type: markdown
+    attributes:
+      value: Umbrella

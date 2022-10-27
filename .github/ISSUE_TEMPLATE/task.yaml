@@ -1,0 +1,10 @@
+name: Task
+title: "Task: "
+description: Create a new Task
+labels: ["kind/task", "status: open"]
+assignees:
+  - ztk37
+body:
+  - type: markdown
+    attributes:
+      value: New Task
