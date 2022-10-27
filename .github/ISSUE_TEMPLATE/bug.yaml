@@ -6,3 +6,10 @@ body:
   - type: markdown
     attributes:
       value: Bug Report
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Type text here
+    validations:
+      required: true

@@ -8,3 +8,10 @@ body:
   - type: markdown
     attributes:
       value: New Task
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Type text here
+    validations:
+      required: true
