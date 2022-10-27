@@ -5,13 +5,10 @@ labels: ["kind/task", "status: open"]
 assignees:
   - ztk37
 body:
-  - type: markdown
-    attributes:
-      value: New Task
   - type: textarea
-    id: description
+    id: summary
     attributes:
-      label: Description
-      description: Type text here
+      label: Summary
+      description: Summarize the task...
     validations:
       required: true

@@ -1,15 +1,12 @@
 name: Bug Report
 title: "Bug: "
 description: Report a Bug
-labels: ["kind/bug"]
+labels: ["kind/bug", "bug/unconfirmed"]
 body:
-  - type: markdown
-    attributes:
-      value: Bug Report
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: Type text here
+      description: Describe the bug...
     validations:
       required: true
