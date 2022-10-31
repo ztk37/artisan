@@ -2,11 +2,14 @@
 
 ![logo](./.github/logo.png)
 
-> `Artisan` is a command line tool for generating projects based on a single [toml](https://toml.io/en/) file.
+> `Artisan` is a command line tool for generating projects based on a single, self-contained, [TOML](https://toml.io/en/) based template file.
 
-## Installation
+## :construction: (WIP) Installation
 
-> :construction: TBD
+- (TBD) [Linux](./docs/installation.md#linux)
+- (TBD) [MacOS](./docs/installation.md#macos)
+- (TBD) [Windows](./docs/installation.md#windows)
+
 
 ## Commands
 
