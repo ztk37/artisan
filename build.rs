@@ -12,10 +12,16 @@ fn main() -> io::Result<()> {
     let bin_name = env!("CARGO_PKG_NAME");
     let out_dir = "completions";
 
-    let cmd = &mut cli::Cli::command();
+    let mut cmd = cli::Cli::command();
 
-    generate_to(Bash, cmd, bin_name, out_dir)?;
-    generate_to(Zsh, cmd, bin_name, out_dir)?;
+    generate_to(Bash, &mut cmd, bin_name, out_dir)?;
+    generate_to(Zsh, &mut cmd, bin_name, out_dir)?;
+
+    let man = clap_mangen::Man::new(cmd);
+    let mut buffer: Vec<u8> = Default::default();
+    man.render(&mut buffer)?;
+
+    std::fs::write("artisan.1", buffer)?;
 
     Ok(())
 }
