@@ -32,6 +32,7 @@ version = "0.0.0"
 dependencies = [
  "ansi_term",
  "clap",
+ "clap_complete",
  "liquid",
  "serde",
  "serde_derive",
@@ -44,6 +45,10 @@ version = "0.1.0"
 
 [[package]]
 name = "artisan_core"
+version = "0.1.0"
+
+[[package]]
+name = "artisan_log"
 version = "0.1.0"
 
 [[package]]
@@ -101,6 +106,15 @@ dependencies = [
  "once_cell",
  "strsim",
  "termcolor",
+]
+
+[[package]]
+name = "clap_complete"
+version = "4.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dfe581a2035db4174cdbdc91265e1aba50f381577f0510d0ad36c7bc59cc84a3"
+dependencies = [
+ "clap",
 ]
 
 [[package]]

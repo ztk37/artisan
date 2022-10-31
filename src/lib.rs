@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
 pub mod cli;
-pub mod commands;
 pub mod error;
+pub mod ops;
 pub mod template;
 
 #[macro_use]

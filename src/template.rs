@@ -35,7 +35,7 @@ impl TemplateFile {
         println!(
             "{} \"{}\"",
             ansi_term::Color::Green.paint("* creating"),
-            self.file.as_path().display().to_string()
+            self.file.as_path().display()
         );
 
         std::io::Write::write_all(&mut file, self.template.as_bytes())

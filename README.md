@@ -14,9 +14,9 @@
 Usage: artisan <COMMAND>
 
 Commands:
+  init    Initialise artisans home directory
   new     Create a new project from a template
   config  Manage artisans global config
-  home    Manage artisans home directory
   help    Print this message or the help of the given subcommand(s)
 
 Options:

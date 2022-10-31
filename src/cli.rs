@@ -1,17 +1,28 @@
-use crate::{commands::new::NewCommand, error::CliResult};
 use clap::{Parser, Subcommand};
 
 #[derive(Debug, Parser)]
-#[command(author, version, about = None, long_about = None)]
+#[command(
+    author,
+    version,
+    about = None,
+    long_about = None
+)]
 pub enum Cli {
+    /// Initialise artisans home directory
+    Init(Init),
     /// Create a new project from a template
     New(NewCommand),
     /// Manage artisans global config
     #[command(subcommand)]
     Config(Config),
-    /// Manage artisans home directory
-    #[command(subcommand)]
-    Home(Home),
+}
+
+#[derive(Debug, Parser)]
+pub struct NewCommand {
+    #[clap(long)]
+    pub name: String,
+    #[clap(long, default_value = "default.toml")]
+    pub template: String,
 }
 
 #[derive(Debug, Subcommand)]
@@ -40,29 +51,5 @@ pub struct SetCommand {
     #[arg(long)]
     value: String,
 }
-
-#[derive(Debug, Subcommand)]
-pub enum Home {
-    /// Create new home folder for artisan
-    Init,
-}
-
-impl Cli {
-    pub fn parse_args() -> Cli {
-        Self::parse()
-    }
-
-    pub fn run(self) -> CliResult {
-        match self {
-            Self::New(cmd) => cmd.run(),
-            Self::Config(cmd) => match cmd {
-                Config::List => todo!(),
-                Config::Get(_) => todo!(),
-                Config::Set(_) => todo!(),
-            },
-            Self::Home(cmd) => match cmd {
-                Home::Init => todo!(),
-            },
-        }
-    }
-}
+#[derive(Debug, Parser)]
+pub struct Init {}

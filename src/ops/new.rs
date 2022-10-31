@@ -1,16 +1,8 @@
 use std::io::Write;
 
-use clap::Parser;
+use crate::{cli::NewCommand, error::CliResult, find_artisan_home_location, template::Template};
 
-use crate::{error::CliResult, find_artisan_home_location, template::Template};
-
-#[derive(Debug, Parser)]
-pub struct NewCommand {
-    #[clap(long)]
-    pub name: String,
-    #[clap(long, default_value = "default.toml")]
-    pub template: String,
-}
+use crate::ops::Run;
 
 pub fn engine() -> liquid::Parser {
     liquid::ParserBuilder::new()
@@ -18,8 +10,8 @@ pub fn engine() -> liquid::Parser {
         .expect("no partial templates supported - no panic")
 }
 
-impl NewCommand {
-    pub fn run(&self) -> CliResult {
+impl Run for NewCommand {
+    fn run(&self) -> CliResult {
         let home = find_artisan_home_location()?;
         let template_dir = home.join("templates");
         let template_file_name = template_dir.join(&self.template);
@@ -36,7 +28,7 @@ impl NewCommand {
 
         std::fs::create_dir(&self.name)?;
 
-        let template: Template = toml::from_slice(&template_file_content.as_ref())?;
+        let template: Template = toml::from_slice(&template_file_content)?;
 
         let engine = engine();
 
@@ -66,7 +58,7 @@ impl NewCommand {
                 Ok(()) => println!(
                     "{} \"{}\"",
                     ansi_term::Color::Green.paint("* creating"),
-                    tpl.file.as_path().display().to_string()
+                    tpl.file.as_path().display()
                 ),
                 Err(err) => println!("{:?}", err),
             }

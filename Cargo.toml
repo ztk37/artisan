@@ -5,10 +5,16 @@ edition = "2021"
 
 [workspace]
 members = [
-    "crates/artisan_config",
-    "crates/artisan_core",
-    "crates/artisan_template"
+    "crates/*"
 ]
+
+[[bin]]
+name = "artisan"
+path = "src/bin/artisan.rs"
+
+[lib]
+name = "artisan"
+path = "src/lib.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -19,3 +25,7 @@ serde = "1.0.144"
 serde_derive = "1.0.144"
 ansi_term = "0.12.1"
 liquid = "0.26.0"
+
+[build-dependencies]
+clap_complete = "4.0.3"
+clap = { version = "4.0.18", features = ["derive"] }
