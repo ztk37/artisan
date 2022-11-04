@@ -49,10 +49,6 @@ name = "artisan_core"
 version = "0.1.0"
 
 [[package]]
-name = "artisan_log"
-version = "0.1.0"
-
-[[package]]
 name = "artisan_template"
 version = "0.1.0"
 
