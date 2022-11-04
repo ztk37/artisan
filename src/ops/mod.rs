@@ -1,16 +1,16 @@
 use crate::cli::Cli;
-use crate::error::CliResult;
+use crate::error::Error;
 
 pub mod config;
 pub mod init;
 pub mod new;
 
 pub trait Run {
-    fn run(&self) -> CliResult;
+    fn run(&self) -> Result<(), Error>;
 }
 
 impl Run for Cli {
-    fn run(&self) -> CliResult {
+    fn run(&self) -> Result<(), Error> {
         match self {
             Cli::New(cmd) => cmd.run(),
             Cli::Config(cmd) => cmd.run(),

@@ -8,9 +8,8 @@ fn main() {
 
     let exit_code = match opts.run() {
         Err(err) => {
-            let code = 1;
-            println!("exited with code {} - {:?}", code, err);
-            code
+            println!("{}", err);
+            err.code
         }
         Ok(()) => 0,
     };

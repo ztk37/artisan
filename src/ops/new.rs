@@ -1,6 +1,9 @@
 use std::io::Write;
 
-use crate::{cli::NewCommand, error::CliResult, find_artisan_home_location, template::Template};
+use crate::cli::NewCommand;
+use crate::error::Error;
+use crate::find_artisan_home_location;
+use crate::template::Template;
 
 use crate::ops::Run;
 
@@ -11,7 +14,7 @@ pub fn engine() -> liquid::Parser {
 }
 
 impl Run for NewCommand {
-    fn run(&self) -> CliResult {
+    fn run(&self) -> Result<(), Error> {
         let home = find_artisan_home_location()?;
         let template_dir = home.join("templates");
         let template_file_name = template_dir.join(&self.template);

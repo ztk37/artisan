@@ -1,9 +1,9 @@
 use crate::cli::Init;
-
-use super::Run;
+use crate::error::Error;
+use crate::ops::Run;
 
 impl Run for Init {
-    fn run(&self) -> crate::error::CliResult {
+    fn run(&self) -> Result<(), Error> {
         todo!()
     }
 }

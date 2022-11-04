@@ -1,9 +1,9 @@
 use crate::cli::Config;
-
-use super::Run;
+use crate::error::Error;
+use crate::ops::Run;
 
 impl Run for Config {
-    fn run(&self) -> crate::error::CliResult {
+    fn run(&self) -> Result<(), Error> {
         match self {
             Config::List => todo!(),
             Config::Get(_) => todo!(),

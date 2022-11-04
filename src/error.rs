@@ -1,26 +1,51 @@
-pub type CliResult = Result<(), CliError>;
+use std::fmt;
+use std::io;
 
 #[derive(Debug)]
-pub enum CliError {
-    Io(std::io::Error),
-    Plain(String),
-    Toml(String),
+pub struct Error {
+    pub code: i32,
+    pub msg: String,
 }
 
-impl From<String> for CliError {
-    fn from(msg: String) -> Self {
-        CliError::Plain(msg)
+impl Error {
+    pub fn new(code: i32, msg: String) -> Self {
+        Error { code, msg }
     }
 }
 
-impl From<std::io::Error> for CliError {
-    fn from(err: std::io::Error) -> Self {
-        CliError::Io(err)
+impl std::error::Error for Error {}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
+        write!(f, "error: {}", self.msg)?;
+
+        Ok(())
     }
 }
 
-impl From<toml::de::Error> for CliError {
-    fn from(err: toml::de::Error) -> Self {
-        CliError::Toml(err.to_string())
+impl From<String> for Error {
+    fn from(msg: String) -> Error {
+        Error { code: 1, msg }
+    }
+}
+
+impl From<io::Error> for Error {
+    fn from(err: io::Error) -> Error {
+        Error {
+            code: err.raw_os_error().unwrap_or(1),
+            msg: err.to_string(),
+        }
+    }
+}
+
+impl From<toml::de::Error> for Error {
+    fn from(err: toml::de::Error) -> Error {
+        Error::from(err.to_string())
+    }
+}
+
+impl From<liquid::Error> for Error {
+    fn from(err: liquid::Error) -> Self {
+        Error::from(err.to_string())
     }
 }
