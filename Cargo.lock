@@ -41,18 +41,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "artisan_config"
-version = "0.1.0"
-
-[[package]]
-name = "artisan_core"
-version = "0.1.0"
-
-[[package]]
-name = "artisan_template"
-version = "0.1.0"
-
-[[package]]
 name = "atty"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"

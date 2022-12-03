@@ -28,90 +28,15 @@ _artisan() {
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:artisan-command-$line[1]:"
         case $line[1] in
-            (init)
+            (new)
 _arguments "${_arguments_options[@]}" \
+'-n+[Project name]:NAME: ' \
+'--name=[Project name]:NAME: ' \
+'-t+[Template name]:TEMPLATE: ' \
+'--template=[Template name]:TEMPLATE: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
 && ret=0
-;;
-(new)
-_arguments "${_arguments_options[@]}" \
-'--name=[]:NAME: ' \
-'--template=[]:TEMPLATE: ' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(config)
-_arguments "${_arguments_options[@]}" \
-'-h[Print help information]' \
-'--help[Print help information]' \
-":: :_artisan__config_commands" \
-"*::: :->config" \
-&& ret=0
-
-    case $state in
-    (config)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:artisan-config-command-$line[1]:"
-        case $line[1] in
-            (list)
-_arguments "${_arguments_options[@]}" \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(get)
-_arguments "${_arguments_options[@]}" \
-'--key=[Config key]:KEY: ' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(set)
-_arguments "${_arguments_options[@]}" \
-'--key=[Config key]:KEY: ' \
-'--value=[Config value]:VALUE: ' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" \
-":: :_artisan__config__help_commands" \
-"*::: :->help" \
-&& ret=0
-
-    case $state in
-    (help)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:artisan-config-help-command-$line[1]:"
-        case $line[1] in
-            (list)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-(get)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-(set)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-        esac
-    ;;
-esac
 ;;
 (help)
 _arguments "${_arguments_options[@]}" \
@@ -125,41 +50,9 @@ _arguments "${_arguments_options[@]}" \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:artisan-help-command-$line[1]:"
         case $line[1] in
-            (init)
+            (new)
 _arguments "${_arguments_options[@]}" \
 && ret=0
-;;
-(new)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-(config)
-_arguments "${_arguments_options[@]}" \
-":: :_artisan__help__config_commands" \
-"*::: :->config" \
-&& ret=0
-
-    case $state in
-    (config)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:artisan-help-config-command-$line[1]:"
-        case $line[1] in
-            (list)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-(get)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-(set)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
-        esac
-    ;;
-esac
 ;;
 (help)
 _arguments "${_arguments_options[@]}" \
@@ -177,68 +70,15 @@ esac
 (( $+functions[_artisan_commands] )) ||
 _artisan_commands() {
     local commands; commands=(
-'init:Initialise artisans home directory' \
-'new:Create a new project from a template' \
-'config:Manage artisans global config' \
+'new:Create a new project based on the given template' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'artisan commands' commands "$@"
 }
-(( $+functions[_artisan__config_commands] )) ||
-_artisan__config_commands() {
-    local commands; commands=(
-'list:List config values' \
-'get:Get config value by key' \
-'set:Set config value by key-value pairs' \
-'help:Print this message or the help of the given subcommand(s)' \
-    )
-    _describe -t commands 'artisan config commands' commands "$@"
-}
-(( $+functions[_artisan__help__config_commands] )) ||
-_artisan__help__config_commands() {
-    local commands; commands=(
-'list:List config values' \
-'get:Get config value by key' \
-'set:Set config value by key-value pairs' \
-    )
-    _describe -t commands 'artisan help config commands' commands "$@"
-}
-(( $+functions[_artisan__config__get_commands] )) ||
-_artisan__config__get_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan config get commands' commands "$@"
-}
-(( $+functions[_artisan__config__help__get_commands] )) ||
-_artisan__config__help__get_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan config help get commands' commands "$@"
-}
-(( $+functions[_artisan__help__config__get_commands] )) ||
-_artisan__help__config__get_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan help config get commands' commands "$@"
-}
-(( $+functions[_artisan__config__help_commands] )) ||
-_artisan__config__help_commands() {
-    local commands; commands=(
-'list:List config values' \
-'get:Get config value by key' \
-'set:Set config value by key-value pairs' \
-'help:Print this message or the help of the given subcommand(s)' \
-    )
-    _describe -t commands 'artisan config help commands' commands "$@"
-}
-(( $+functions[_artisan__config__help__help_commands] )) ||
-_artisan__config__help__help_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan config help help commands' commands "$@"
-}
 (( $+functions[_artisan__help_commands] )) ||
 _artisan__help_commands() {
     local commands; commands=(
-'init:Initialise artisans home directory' \
-'new:Create a new project from a template' \
-'config:Manage artisans global config' \
+'new:Create a new project based on the given template' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'artisan help commands' commands "$@"
@@ -247,31 +87,6 @@ _artisan__help_commands() {
 _artisan__help__help_commands() {
     local commands; commands=()
     _describe -t commands 'artisan help help commands' commands "$@"
-}
-(( $+functions[_artisan__help__init_commands] )) ||
-_artisan__help__init_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan help init commands' commands "$@"
-}
-(( $+functions[_artisan__init_commands] )) ||
-_artisan__init_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan init commands' commands "$@"
-}
-(( $+functions[_artisan__config__help__list_commands] )) ||
-_artisan__config__help__list_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan config help list commands' commands "$@"
-}
-(( $+functions[_artisan__config__list_commands] )) ||
-_artisan__config__list_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan config list commands' commands "$@"
-}
-(( $+functions[_artisan__help__config__list_commands] )) ||
-_artisan__help__config__list_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan help config list commands' commands "$@"
 }
 (( $+functions[_artisan__help__new_commands] )) ||
 _artisan__help__new_commands() {
@@ -282,21 +97,6 @@ _artisan__help__new_commands() {
 _artisan__new_commands() {
     local commands; commands=()
     _describe -t commands 'artisan new commands' commands "$@"
-}
-(( $+functions[_artisan__config__help__set_commands] )) ||
-_artisan__config__help__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan config help set commands' commands "$@"
-}
-(( $+functions[_artisan__config__set_commands] )) ||
-_artisan__config__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan config set commands' commands "$@"
-}
-(( $+functions[_artisan__help__config__set_commands] )) ||
-_artisan__help__config__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'artisan help config set commands' commands "$@"
 }
 
 _artisan "$@"

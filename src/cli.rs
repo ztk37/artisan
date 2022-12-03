@@ -1,4 +1,4 @@
-use clap::{Parser, Subcommand};
+use clap::Parser; // 4.0.26
 
 #[derive(Debug, Parser)]
 #[command(
@@ -8,48 +8,16 @@ use clap::{Parser, Subcommand};
     long_about = None
 )]
 pub enum Cli {
-    /// Initialise artisans home directory
-    Init(Init),
-    /// Create a new project from a template
-    New(NewCommand),
-    /// Manage artisans global config
-    #[command(subcommand)]
-    Config(Config),
+    /// Create a new project based on the given template
+    New(NewCommand)
 }
 
 #[derive(Debug, Parser)]
 pub struct NewCommand {
-    #[clap(long)]
+    /// Project name
+    #[clap(short, long)]
     pub name: String,
-    #[clap(long, default_value = "default.toml")]
+    /// Template name
+    #[clap(short, long, default_value = "default.toml")]
     pub template: String,
 }
-
-#[derive(Debug, Subcommand)]
-pub enum Config {
-    /// List config values
-    List,
-    /// Get config value by key
-    Get(GetCommand),
-    /// Set config value by key-value pairs
-    Set(SetCommand),
-}
-
-#[derive(Debug, Parser)]
-pub struct GetCommand {
-    /// Config key
-    #[arg(long)]
-    key: String,
-}
-
-#[derive(Debug, Parser)]
-pub struct SetCommand {
-    /// Config key
-    #[arg(long)]
-    key: String,
-    /// Config value
-    #[arg(long)]
-    value: String,
-}
-#[derive(Debug, Parser)]
-pub struct Init {}

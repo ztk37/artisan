@@ -1,3 +1,0 @@
-# `artisan_config`
-
-> WIP

@@ -3,19 +3,6 @@ name = "artisan"
 version = "0.0.0"
 edition = "2021"
 
-[workspace]
-members = [
-    "crates/*"
-]
-
-[[bin]]
-name = "artisan"
-path = "src/bin/artisan.rs"
-
-[lib]
-name = "artisan"
-path = "src/lib.rs"
-
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
