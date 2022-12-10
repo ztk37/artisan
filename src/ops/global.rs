@@ -23,16 +23,13 @@ fn global_init(ctx: &Context, cmd: &InitCommand) -> Result<(), Error> {
     let home =
         std::env::var("HOME").map_err(|_| "Environment variable \"HOME\" not set.".to_string())?;
 
-    let config_paths =
-        &ctx.config_paths
-            .clone()
-            .unwrap_or(ConfigPaths::from(PathBuf::from(&home).join(
-                if cmd.use_config_dir {
-                    PathBuf::from_iter(&[&home, ".config", "artisan"])
-                } else {
-                    PathBuf::from_iter(&[&home, ".artisan"])
-                },
-            )));
+    let config_paths = &ctx.config_paths.clone().unwrap_or_else(|| {
+        ConfigPaths::from(PathBuf::from(&home).join(if cmd.use_config_dir {
+            PathBuf::from_iter(&[&home, ".config", "artisan"])
+        } else {
+            PathBuf::from_iter(&[&home, ".artisan"])
+        }))
+    });
 
     fs::create_dir_all(&config_paths.base_dir_path)?;
 
@@ -42,7 +39,7 @@ fn global_init(ctx: &Context, cmd: &InitCommand) -> Result<(), Error> {
     fs::create_dir(&config_paths.template_dir_path)?;
     let mut default_template_file =
         fs::File::create(&config_paths.template_dir_path.join("default.toml"))?;
-    default_template_file.write(DEFAULT_TEMPLATE.as_bytes())?;
+    default_template_file.write_all(DEFAULT_TEMPLATE.as_bytes())?;
 
     Ok(())
 }

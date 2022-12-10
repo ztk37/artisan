@@ -34,8 +34,8 @@ impl From<&String> for ConfigPaths {
     fn from(base_path: &String) -> Self {
         ConfigPaths {
             base_dir_path: PathBuf::from(base_path),
-            config_file_path: PathBuf::from_iter(&[&base_path, "config.toml"]),
-            template_dir_path: PathBuf::from_iter(&[&base_path, "templates"]),
+            config_file_path: PathBuf::from_iter(&[base_path, "config.toml"]),
+            template_dir_path: PathBuf::from_iter(&[base_path, "templates"]),
         }
     }
 }
