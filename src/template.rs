@@ -2,6 +2,18 @@ use std::path::PathBuf;
 
 use serde_derive::Deserialize;
 
+pub const DEFAULT_TEMPLATE: &str = r#"
+[[templates]]
+file = "README.md"
+template = """
+# Default Template
+
+> Project description
+
+"""
+
+"#;
+
 #[derive(Debug, Deserialize)]
 pub struct Template {
     pub name: String,

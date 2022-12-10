@@ -13,8 +13,9 @@ impl Context {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ConfigPaths {
+    pub base_dir_path: PathBuf,
     pub config_file_path: PathBuf,
     pub template_dir_path: PathBuf,
 }
@@ -22,6 +23,17 @@ pub struct ConfigPaths {
 impl From<String> for ConfigPaths {
     fn from(base_path: String) -> Self {
         ConfigPaths {
+            base_dir_path: PathBuf::from(&base_path),
+            config_file_path: PathBuf::from_iter(&[&base_path, "config.toml"]),
+            template_dir_path: PathBuf::from_iter(&[&base_path, "templates"]),
+        }
+    }
+}
+
+impl From<&String> for ConfigPaths {
+    fn from(base_path: &String) -> Self {
+        ConfigPaths {
+            base_dir_path: PathBuf::from(base_path),
             config_file_path: PathBuf::from_iter(&[&base_path, "config.toml"]),
             template_dir_path: PathBuf::from_iter(&[&base_path, "templates"]),
         }
@@ -31,6 +43,7 @@ impl From<String> for ConfigPaths {
 impl From<PathBuf> for ConfigPaths {
     fn from(base_path: PathBuf) -> Self {
         ConfigPaths {
+            base_dir_path: PathBuf::from(&base_path),
             config_file_path: base_path.join("config.toml"),
             template_dir_path: base_path.join("templates"),
         }
